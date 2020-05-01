@@ -3,6 +3,7 @@ let slider = document.getElementById("slider"),
     sliderLength = sliderItem.length,
     sliderControle = document.getElementById('slider-controle');
 
+//display amount of items
 console.log("Amount of slider items is " + sliderLength);
 
 // create dots
@@ -15,15 +16,11 @@ for (i = 0; i < sliderLength; i++) {
     dot.dataset.dot = i;
     dot.innerText = i;
 
-    console.log(dot);
-
     sliderControle.appendChild(dot);
 }
 
 // show only first item
 showItem(0);
-
-//console.log(dot);
 
 // click on dot
 sliderControle.addEventListener('click', function (event) {
@@ -31,7 +28,6 @@ sliderControle.addEventListener('click', function (event) {
         dotData = event.target.attributes[1].value;
 
     console.log(dotData);
-
 
     for (let i = 0; i < sliderLength; i++) {
         if (i == dotData) {
@@ -41,7 +37,7 @@ sliderControle.addEventListener('click', function (event) {
             dotActive[i].classList.add('active-dot');
         }
         else if (dotData == 'slider-controle') {
-            console.log('Click on controle');
+            console.log('Click on controle zone.');
         }
         else {
             sliderItem[i].style.display = "none";
@@ -50,7 +46,6 @@ sliderControle.addEventListener('click', function (event) {
             dotActive[i].classList.remove('active-dot');
         }
     }
-
 });
 
 //create arrows
@@ -63,23 +58,16 @@ for (i = -1; i < 2; i++) {
 
     if (i === -1) {
         arrow.classList.add("prev");
-
         sliderTrack.appendChild(arrow);
-
-        console.log(arrow.className);
     }
-    else if (i === 0) {
-
-    }
+    else if (i === 0) { }
     else {
         arrow.classList.add("next");
-
         sliderTrack.appendChild(arrow);
-
-        console.log(arrow.className);
     }
 }
 
+//click on btn
 sliderTrack.addEventListener('click', function (event) {
 
     let activeItem = document.getElementsByClassName('active-item'),
@@ -89,30 +77,21 @@ sliderTrack.addEventListener('click', function (event) {
         activeItemIdNum = Number(activeItemId),
         arrowDataNum = Number(arrowData);
 
-
     switch (arrowData) {
         case "-1":
             console.log('-1 arrow');
-
-            console.log(activeItemId);
-
             showItem(activeItemIdNum + arrowDataNum);
-
-
             break;
 
         case "1":
             console.log('1 arrow');
-
-            console.log(activeItemId);
-
             showItem(activeItemIdNum + arrowDataNum);
-
             break;
     }
 
 });
 
+//main function
 function showItem(b) {
     let dotActive = document.querySelectorAll('.slider-controle > span');
 
@@ -123,7 +102,6 @@ function showItem(b) {
 
                 sliderItem[i].classList.add('active-item');
                 dotActive[i].classList.add('active-dot');
-
             }
             else {
                 sliderItem[i].style.display = "none";
@@ -133,7 +111,26 @@ function showItem(b) {
             }
         }
     }
+    else if (b < 0) {
+        sliderItem[sliderLength - 1].style.display = "flex";
+
+        sliderItem[sliderLength - 1].classList.add('active-item');
+        dotActive[sliderLength - 1].classList.add('active-dot');
+
+        sliderItem[0].style.display = "none";
+
+        sliderItem[0].classList.remove('active-item');
+        dotActive[0].classList.remove('active-dot');
+    }
     else {
-        console.log('error');
+        sliderItem[0].style.display = "flex";
+
+        sliderItem[0].classList.add('active-item');
+        dotActive[0].classList.add('active-dot');
+
+        sliderItem[sliderLength - 1].style.display = "none";
+
+        sliderItem[sliderLength - 1].classList.remove('active-item');
+        dotActive[sliderLength - 1].classList.remove('active-dot');
     }
 }
